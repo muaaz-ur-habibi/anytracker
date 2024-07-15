@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Anytracker{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="container heading-holder">
+        <center>
+            <h1 class="headings-style">Anytracker</h1>
+            <br>
+            <h4 class="headings-style">Track anything</h4>
+        </center>
+    </div>
+
+    <div class="container-fluid row" id="login-signup-holder">
+        <div class="container login col">
+            <center>
+                <h4 class="normal-headings">Login</h4>
+            </center>
+            <form method="post" action="/handle_credentials/login">
+                <label for="staticEmail" class="col-sm-2 col-form-label subheadings-color">Email</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control-plaintext form-entry" name="emailEntry" id="emailEntry" placeholder="Email">
+                </div>
+
+                <label for="staticPassword" class="col-sm-2 col-form-label subheadings-color">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control-plaintext form-entry" name="passEntry" id="passEntry" placeholder="Password">
+                </div>
+
+                <div class="container form-submit-btn-holder">
+                    <center>
+                        <button type="button" class="btn buttons-styling">Login</button>
+                    </center>
+                </div>
+            </form>
+        </div>
+
+        <div class="container signup col">
+            <center>
+                <h4 class="normal-headings">Signup</h4>
+            </center>
+            <form method="post" action="/handle_credentials/signup">
+                <label for="emailEntry" class="col-sm-2 col-form-label subheadings-color">Email</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control-plaintext form-entry" name="emailEntry" id="emailEntry" placeholder="Email">
+                </div>
+
+                <label for="passEntry" class="col-sm-2 col-form-label subheadings-color">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control-plaintext form-entry" name="passEntry" id="passEntry" placeholder="Password">
+                </div>
+                
+                <label for="nameEntry" class="col-sm-2 col-form-label subheadings-color">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control-plaintext form-entry" name="nameEntry" id="nameEntry" placeholder="Username (Max 140 characters)">
+                </div>
+
+                <div class="container form-submit-btn-holder">
+                    <center>
+                        <button type="submit" class="btn buttons-styling">Signup</button>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

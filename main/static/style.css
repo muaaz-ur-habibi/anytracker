@@ -1,0 +1,52 @@
+body {
+    background-color: rgb(42, 0, 48);
+}
+
+.heading-holder {
+    margin-top: 20px;
+}
+
+.headings-style {
+    color: rgb(250, 201, 126);
+    font-family: "Playwrite CL", cursive;
+    font-weight: 600;
+}
+
+.normal-headings {
+    color: rgb(255, 90, 200);
+    font-family: "Pacifico", cursive;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.subheadings-color {
+    color: rgb(255, 255, 255);
+    font-family: "Kanit", sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+#login-signup-holder {
+    margin-top: 50px;
+    background-color: rgb(92, 0, 104);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 2px solid rgb(30, 0, 37);
+}
+
+.form-entry {
+    border: 1px solid white;
+    border-radius: 4px;
+    box-shadow: none;
+    outline: none;
+    padding-left: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.form-submit-btn-holder {
+    margin-top: 30px;
+}
+
+.buttons-styling {
+    background-color: rgb(255, 175, 55);
+}
