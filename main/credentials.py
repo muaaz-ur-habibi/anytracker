@@ -30,13 +30,17 @@ def signup():
     elif '@' not in email or '.com' not in email or len(email) <= 4:
         flash("Please provide a valid email address", category="error")
         return render_template('landing.html')
+    
+    elif len(username) <= 3:
+        flash("Username needs to be atleast 3 characters", category="error")
+        return render_template('landing.html')
 
     else:
+        # after all checks are passed, create the user account and add it to the database
         created_user = User(email=email, password=password, name=username)
         
         db.session.add(created_user)
         db.session.commit()
-
 
         flash("Account has been created", 'success')
         return redirect(f'/home/{username}')
