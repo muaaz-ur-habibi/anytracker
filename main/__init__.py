@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_login import LoginManager
+
 from os import path
 
 # creating the databases
@@ -22,6 +24,15 @@ def build_app():
 
     with app.app_context():
         build_db()
+
+    # creating the login manager
+    login_m = LoginManager(app=app)
+    login_m.login_view = 'views.home_page'
+    login_m.init_app(app=app)
+
+    @login_m.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(credentials, url_prefix="/handle_credentials")
