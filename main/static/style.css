@@ -50,3 +50,27 @@ body {
 .buttons-styling {
     background-color: rgb(255, 175, 55);
 }
+
+
+.tracker-info-cards-holder {
+    margin-top: 20px;
+}
+
+.tracker-info-cards {
+    max-width: 250px;
+    margin-top: 20px;
+}
+
+
+.create-tracker-form {
+    border: 1px solid purple;
+    padding: 20px 20px 20px 20px;
+}
+
+.create-tracker-form-subheadings {
+    font-size: 17px;
+}
+
+.axis-values-input {
+    max-width: 250px;
+}

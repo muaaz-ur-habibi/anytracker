@@ -3,9 +3,25 @@
 
 {% block body %}
 <div class="container">
-    <center>
-        <h1>Welcome</h1>
-        <h4>{{ uname }}</h4>
-    </center>
+    <div class="heading-holder">
+        <center>
+            <h1 class="headings-style">Welcome</h1>
+            <h4 class="headings-style">{{ uname.name }}</h4>
+        </center>
+    </div>
+
+    <div class="container">
+        <h2 class="normal-headings">Your trackers:</h2>
+            <div class="container-fluid tracker-info-cards-holder">
+                {% for data in uname.datas %}
+                <div class="card tracker-info-cards">
+                    <div class="card-body">
+                        <h5>Name: {{ data.graph_title }}</h5>
+                        <p>Type: {{ data.tracker_type }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+    </div>
 </div>
 {% endblock %}

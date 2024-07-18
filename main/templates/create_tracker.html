@@ -4,17 +4,57 @@
 {% block body%}
 
 <div class="container">
-    <div class="container-fluid">
+    <div class="container-fluid heading-holder">
         <center>
-            <h1>Create a Tracker</h1>
+            <h1 class="headings-style">Create a Tracker</h1>
         </center>
     </div>
-    <div class="container-fluid">
-        <form method="post">
+    <div class="container-fluid create-tracker-form">
+        <h4 class="headings-style">Tracker details</h4>
+        <br>
+        <form method="post" action="">
             
+            <label for="tracker-select" class="subheadings-color create-tracker-form-subheadings">Select the type of tracker</label>
+            <select class="form-select" aria-label="tracker select" name="tracker-select" id="tracker-select">
+                <option selected>Tracker type</option>
+                <option value="bar">Bar chart</option>
+                <option value="line">Line graph</option>
+                <option value="scatter">Scatter graph</option>
+            </select>
+
+            <br><br>
+
+            <label for="x-axis-values" class="subheadings-color create-tracker-form-subheadings">Enter X-Axis values (seperated by a comma , )</label>
+            <div class="input-group input-group-sm axis-values-input">
+                <input type="text" class="form-control" placeholder="" name="x-axis-values" id="x-axis-values">
+            </div>
+            <label for="y-axis-values" class="subheadings-color create-tracker-form-subheadings">Enter Y-Axis values (seperated by a comma , )</label>
+            <div class="input-group input-group-sm axis-values-input">
+                <input type="text" class="form-control" placeholder="" name="y-axis-values" id="y-axis-values">
+            </div>
+
+            <br>
+
+            <label for="x-axis-label" class="subheadings-color create-tracker-form-subheadings">Enter X-Axis label</label>
+            <div class="input-group input-group-sm axis-values-input">
+                <input type="text" class="form-control" placeholder="" name="x-axis-label" id="x-axis-label">
+            </div>
+            <label for="y-axis-label" class="subheadings-color create-tracker-form-subheadings">Enter Y-Axis label</label>
+            <div class="input-group input-group-sm axis-values-input">
+                <input type="text" class="form-control" placeholder="" name="y-axis-label" id="y-axis-label">
+            </div>
+
+            <br>
+
+            <label for="graph-title" class="subheadings-color create-tracker-form-subheadings">Enter tracker title</label>
+            <div class="input-group input-group-sm axis-values-input">
+                <input type="text" class="form-control" placeholder="" name="graph-title" id="graph-title">
+            </div>
+            <br>
+            <button type="submit" class="btn buttons-styling">Create this tracker</button>
         </form>
     </div>
 
 </div>
 
-{% endbody %}
+{% endblock %}
