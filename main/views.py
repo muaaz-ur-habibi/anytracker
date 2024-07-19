@@ -42,40 +42,61 @@ def create_a_tracker(uname):
         x_values = request.form.get('x-axis-values')
         y_values = request.form.get('y-axis-values')
 
-        x_axis_title = request.form.get('x-axis-label')
-        y_axis_title = request.form.get('y-axis-label')
+        # implement a check, to check that both the values are same dimensions
+        x_check = x_values.split(", ")
+        y_check = y_values.split(", ")
 
-        graph_title = request.form.get('graph-title')
+        if len(x_check) != len(y_check):
+            flash("Dimensions of added values are not equal.", 'error')
+            return render_template('create_tracker.html', uname=user_info, logged=current_user)
+        else:
 
-        # create the new tracker object
-        new_tracker = Graph(user_id=current_user.id,
-                            tracker_type=tracker_type,
-                            x_values=x_values,
-                            y_values=y_values,
-                            x_axis_label=x_axis_title,
-                            y_axis_label=y_axis_title,
-                            graph_title=graph_title)
-        # add the new tracker to database and commit
-        db.session.add(new_tracker)
-        db.session.commit()
+            x_axis_title = request.form.get('x-axis-label')
+            y_axis_title = request.form.get('y-axis-label')
 
-        flash("Tracker created successfully", category="success")
-        return render_template('create_tracker.html', uname=user_info, logged=current_user)
-    
+            graph_title = request.form.get('graph-title')
+
+            # create the new tracker object
+            new_tracker = Graph(user_id=current_user.id,
+                                tracker_type=tracker_type,
+                                x_values=x_values,
+                                y_values=y_values,
+                                x_axis_label=x_axis_title,
+                                y_axis_label=y_axis_title,
+                                graph_title=graph_title)
+            # add the new tracker to database and commit
+            db.session.add(new_tracker)
+            db.session.commit()
+
+            flash("Tracker created successfully", category="success")
+            return render_template('create_tracker.html', uname=user_info, logged=current_user)
+
+
 # these functions generate the graphs
 @views.route('<string:uname>/<string:graph_title>/create_graph_png/plot.png')
 def create_graph_png(uname, graph_title):
     user_data = User.query.filter_by(name=uname).first()
     graphs_data = Graph.query.filter_by(user_id=user_data.id, graph_title=graph_title).first()
     
-    x = graphs_data.x_values
-    print(x)
-    x = x.split(", ")
-    x = [i for i in x]
+    # A simple check to see if the user entered integer values or alphabetical values.
+    # These two checks will return integer list if the strings can be converted to an integer
+    try:
+        x = graphs_data.x_values
+        x = x.split(", ")
+        x = [int(i) for i in x]
+    except ValueError:
+        x = graphs_data.x_values
+        x = x.split(", ")
+        x = [i for i in x]
 
-    y = graphs_data.y_values
-    y = y.split(", ")
-    y = [i for i in y]
+    try:
+        y = graphs_data.y_values
+        y = y.split(", ")
+        y = [int(i) for i in y]
+    except ValueError:
+        y = graphs_data.y_values
+        y = y.split(", ")
+        y = [i for i in y]
     
     graph = create_graph(x_data=x, y_data=y)
     graph_pic = io.BytesIO()
@@ -88,6 +109,7 @@ def create_graph(x_data:list,
                 y_data:list):
     graph = Figure()
     axis = graph.add_subplot(1, 1, 1)
+
     # actual data that is plotted
     axis.plot(x_data, y_data)
 
