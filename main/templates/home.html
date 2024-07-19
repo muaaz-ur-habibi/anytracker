@@ -15,10 +15,12 @@
             <div class="container-fluid tracker-info-cards-holder">
                 {% for data in uname.datas %}
                 <div class="card tracker-info-cards">
-                    <div class="card-body">
-                        <h5>Name: {{ data.graph_title }}</h5>
-                        <p>Type: {{ data.tracker_type }}</p>
-                    </div>
+                    <a href="/{{ uname.name }}/view_trackers/{{ data.graph_title.lower() }}">
+                        <div class="card-body">
+                            <h5>Name: {{ data.graph_title }}</h5>
+                            <p>Type: {{ data.tracker_type }}</p>
+                        </div>
+                    </a>     
                 </div>
                 {% endfor %}
             </div>

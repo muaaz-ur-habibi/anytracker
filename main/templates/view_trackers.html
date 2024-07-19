@@ -3,10 +3,14 @@
 
 {% block body %}
 <div class="container">
-    <class class="container-fluid heading-holder">
+    <div class="container-fluid heading-holder">
         <center>
-            <h1>View a tracker</h1>
+            <h1 class="headings-style">View a tracker</h1>
         </center>
-    </class>
+    </div>
+
+    <div class="container">
+        <img src="/{{ uname.name }}/{{ tracker_name }}/create_graph_png/plot.png" alt="my plaot">
+    </div>
 </div>
 {% endblock %}

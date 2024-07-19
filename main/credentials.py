@@ -25,7 +25,7 @@ def login():
         # check the password
         if user.password == password:
             # login the user
-            login_user(user=user, remember=True)
+            login_user(user=user)
 
             return redirect(f'/home/{username}')
 
