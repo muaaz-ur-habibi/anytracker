@@ -6,11 +6,14 @@
     <div class="container-fluid heading-holder">
         <center>
             <h1 class="headings-style">View a tracker</h1>
+            <h2 class="subheadings-color">{{ tracker_name }}: a {{ graph_data.tracker_type }} graph</h2>
         </center>
     </div>
 
-    <div class="container">
-        <img src="/{{ uname.name }}/{{ tracker_name }}/create_graph_png/plot.png" alt="my plaot">
+    <div class="container graph-viewer">
+        <center>
+            <img src="/{{ uname.name }}/{{ tracker_name }}/create_graph_png/plot.png" alt="a_plot_should_be_here">
+        </center>
     </div>
 </div>
 {% endblock %}

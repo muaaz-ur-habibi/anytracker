@@ -77,6 +77,9 @@ def create_a_tracker(uname):
 def create_graph_png(uname, graph_title):
     user_data = User.query.filter_by(name=uname).first()
     graphs_data = Graph.query.filter_by(user_id=user_data.id, graph_title=graph_title).first()
+
+    x_label = graphs_data.x_axis_label
+    y_label = graphs_data.y_axis_label
     
     # A simple check to see if the user entered integer values or alphabetical values.
     # These two checks will return integer list if the strings can be converted to an integer
@@ -98,7 +101,7 @@ def create_graph_png(uname, graph_title):
         y = y.split(", ")
         y = [i for i in y]
     
-    graph = create_graph(x_data=x, y_data=y)
+    graph = create_graph(x_data=x, y_data=y, x_label=x_label, y_label=y_label)
     graph_pic = io.BytesIO()
     FigCanv(graph).print_png(graph_pic)
 
@@ -106,12 +109,16 @@ def create_graph_png(uname, graph_title):
 
 
 def create_graph(x_data:list,
-                y_data:list):
+                y_data:list,
+                x_label:str,
+                y_label:str):
     graph = Figure()
     axis = graph.add_subplot(1, 1, 1)
 
     # actual data that is plotted
     axis.plot(x_data, y_data)
+    axis.set_xlabel(xlabel=x_label)
+    axis.set_ylabel(ylabel=y_label)
 
     return graph
 
@@ -120,11 +127,11 @@ def create_graph(x_data:list,
 @login_required
 def view_trackers(uname, tracker_name):
     user_info = User.query.filter_by(name=uname).first()
-    
+    graphs_data = Graph.query.filter_by(user_id=user_info.id).first()
 
 
 
-    return render_template('view_trackers.html', uname=user_info, logged=current_user, tracker_name=tracker_name)
+    return render_template('view_trackers.html', uname=user_info, logged=current_user, tracker_name=tracker_name, graph_data=graphs_data)
 
 
 @views.route('/<string:uname>/update_tracker/<string:tracker_name>')

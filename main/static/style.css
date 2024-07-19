@@ -32,7 +32,7 @@ a:hover {
     color: rgb(255, 255, 255);
     font-family: "Kanit", sans-serif;
     font-weight: 300;
-    font-size: 15px;
+    /*font-size: 15px;*/
 }
 
 #login-signup-holder {
@@ -82,4 +82,13 @@ a:hover {
 
 .axis-values-input {
     max-width: 250px;
+}
+
+.graph-viewer {
+    margin-top: 20px;
+}
+
+.graph-type-holder {
+    margin-top: 50px;
+    max-width: 300px;
 }
