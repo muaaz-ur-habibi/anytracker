@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+import smtplib
+
 from flask_login import LoginManager
 
 from os import path
@@ -13,6 +15,7 @@ def build_app():
     from .views import views
     from .credentials import credentials
 
+    # secret key is same as gmail account
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "rias_gremory"
     
@@ -43,3 +46,9 @@ def build_db():
     if not path.exists(f'main/{DATA_DB_NAME}'):
         db.create_all()
         print("Database created")
+
+# creating the smtp server
+def build_smtp():
+    smtp = smtplib.SMTP()
+
+    return smtp

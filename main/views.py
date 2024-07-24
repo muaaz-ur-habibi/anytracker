@@ -21,7 +21,6 @@ def home_page():
 @login_required
 def home(uname):
     user_info = User.query.filter_by(name=uname).first()
-    print(user_info.datas)
     
     return render_template('home.html', uname=user_info, logged=current_user)
     
@@ -30,7 +29,6 @@ def home(uname):
 @login_required
 def create_a_tracker(uname):
     user_info = User.query.filter_by(name=uname).first()
-    print(user_info)
 
     if request.method == "GET":
         return render_template('create_tracker.html', uname=user_info, logged=current_user)
@@ -46,15 +44,19 @@ def create_a_tracker(uname):
         x_check = x_values.split(", ")
         y_check = y_values.split(", ")
 
+        graph_title = request.form.get('graph-title')
+
+        current_graph_title = Graph.query.filter_by(graph_title=graph_title).first()
+        
         if len(x_check) != len(y_check):
             flash("Dimensions of added values are not equal.", 'error')
             return render_template('create_tracker.html', uname=user_info, logged=current_user)
+        elif current_graph_title is not None:
+            flash("A tracker already exists with that name", category="error")
+            return render_template('create_tracker.html', uname=user_info, logged=current_user)
         else:
-
             x_axis_title = request.form.get('x-axis-label')
             y_axis_title = request.form.get('y-axis-label')
-
-            graph_title = request.form.get('graph-title')
 
             # create the new tracker object
             new_tracker = Graph(user_id=current_user.id,
@@ -100,8 +102,10 @@ def create_graph_png(uname, graph_title):
         y = graphs_data.y_values
         y = y.split(", ")
         y = [i for i in y]
+
+    graph_type = graphs_data.tracker_type
     
-    graph = create_graph(x_data=x, y_data=y, x_label=x_label, y_label=y_label)
+    graph = create_graph(x_data=x, y_data=y, x_label=x_label, y_label=y_label, graph_type=graph_type)
     graph_pic = io.BytesIO()
     FigCanv(graph).print_png(graph_pic)
 
@@ -111,16 +115,35 @@ def create_graph_png(uname, graph_title):
 def create_graph(x_data:list,
                 y_data:list,
                 x_label:str,
-                y_label:str):
+                y_label:str,
+                graph_type:str):
     graph = Figure()
-    axis = graph.add_subplot(1, 1, 1)
 
-    # actual data that is plotted
-    axis.plot(x_data, y_data)
-    axis.set_xlabel(xlabel=x_label)
-    axis.set_ylabel(ylabel=y_label)
+    # create the 3 different types of graphs
 
-    return graph
+    if graph_type == "line":
+        axis = graph.add_subplot(1, 1, 1)
+
+        # actual data that is plotted
+        axis.plot(x_data, y_data)
+        axis.set_xlabel(xlabel=x_label)
+        axis.set_ylabel(ylabel=y_label)
+
+        return graph
+    
+    elif graph_type == "bar":
+        axis = graph.add_subplot(1, 1, 1)
+
+        # actual data that is plotted
+        # calculating the optimal bar dimensions
+        bar_width = 0.4
+        bar_height = y_data
+
+        axis.bar(x=x_data, height=bar_height, width=bar_width)
+        axis.set_xlabel(xlabel=x_label)
+        axis.set_ylabel(ylabel=y_label)
+
+        return graph
 
 
 @views.route("/<string:uname>/view_trackers/<string:tracker_name>")
@@ -134,10 +157,14 @@ def view_trackers(uname, tracker_name):
     return render_template('view_trackers.html', uname=user_info, logged=current_user, tracker_name=tracker_name, graph_data=graphs_data)
 
 
-@views.route('/<string:uname>/update_tracker/<string:tracker_name>')
+@views.route('/<string:uname>/update_tracker/<string:tracker_name>', methods=["GET", "POST"])
 @login_required
 def update_tracker(uname, tracker_name):
     user_info = User.query.filter_by(name=uname).first()
+    graphs_info = Graph.query.filter_by(user_id=user_info.id).first()
 
-
-    return "udpate"
+    if request.method == "GET":
+        return render_template('update_tracker.html', uname=uname, tracker_name=tracker_name, logged=current_user, graphs_info=graphs_info)
+    
+    elif request.method == "POST":
+        pass

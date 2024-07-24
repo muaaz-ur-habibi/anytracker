@@ -4,11 +4,12 @@ body {
 
 a {
     text-decoration: none;
+    color: rgb(0, 0, 0);
 }
 
 a:hover {
     text-decoration:none;
-    color: black;
+    color: rgba(195, 8, 219, 0.404);
 }
 
 .heading-holder {
