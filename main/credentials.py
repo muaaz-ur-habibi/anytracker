@@ -8,15 +8,13 @@ from flask_login import login_user, logout_user, login_required
 
 from hashlib import sha256
 
-# for the mails body
-from email.message import EmailMessage
 
-from . import build_smtp
+import random
+
 
 from .models import User
 from . import db
 
-smtp = build_smtp()
 
 credentials = Blueprint("credentials", __name__)
 
@@ -56,18 +54,18 @@ def signup():
     # pass the input data through some checks to validate their authenticity
     if len(password) < 5:
         flash("Password should be greater than 5 characters", category='error')
-        return render_template('landing.html')
+        return redirect(url_for("views.home_page"))
     
-    elif len(email) <= 2:
-        flash("email needs to be atleast 2 characters", category="error")
-        return render_template('landing.html')
+    elif len(email) <= 5 or "@" not in email or ".com" not in email:
+        flash("Please enter a valid email address", category="error")
+        return redirect(url_for("views.home_page"))
 
     else:
         # after all checks are passed, create the user account and add it to the database
-        created_user = User(password=sha256(password.encode()).hexdigest(), name=email)
+        created_user = User(password=sha256(password.encode()).hexdigest(), name=email, verification_code=generate_code())
 
         user_exist = User.query.filter_by(name=email).first()
-        
+
         # if the email doesnt already exist
         if user_exist == None:
 
@@ -85,21 +83,17 @@ def signup():
         # else return an error that the email exists
         else:
             flash("Account with that email already exists", 'error')
-            return render_template('landing.html')
+            return redirect(url_for("views.home_page"))
         
+def generate_code():
+    letters = "a b c d e f g h j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+    letters = letters.split(" ")
 
-def verification(email:str, code:int):
-    smtp.sendmail("muaazarkhan@gmail.com")
-    mail = EmailMessage()
-    mail["Subject"] = "Signing Up: Verification"
-    mail["From"] = "mail.anytracker@gmail.com"
-    mail["To"] = email
-    email.set_content("""
-Hey there! Thanks for signing up to Anytracker. We hope you enjoy our service
+    code = [letters[random.randint(0, 24)] for _ in range(0, 9)]
 
-Anyways here's the verification code: {code}. Thanks for your time. Have a trackable experience
-""")
+    code = "".join(i for i in code).lower()
 
+    return code
 
 @credentials.route('/logout')
 @login_required

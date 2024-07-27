@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     datas = db.relationship('Graph')
 
     # for handling verified and unverified users
-    verification_code = db.Column(db.Integer, unique=True)
+    verification_code = db.Column(db.String(10), unique=True)
     verified = db.Column(db.String(50))
 
 

@@ -104,6 +104,8 @@ def create_graph_png(uname, graph_title):
         y = [i for i in y]
 
     graph_type = graphs_data.tracker_type
+
+    print(graph_type)
     
     graph = create_graph(x_data=x, y_data=y, x_label=x_label, y_label=y_label, graph_type=graph_type)
     graph_pic = io.BytesIO()
@@ -135,11 +137,7 @@ def create_graph(x_data:list,
         axis = graph.add_subplot(1, 1, 1)
 
         # actual data that is plotted
-        # calculating the optimal bar dimensions
-        bar_width = 0.4
-        bar_height = y_data
-
-        axis.bar(x=x_data, height=bar_height, width=bar_width)
+        axis.bar(x=x_data, height=y_data, width=0.5, color="green")
         axis.set_xlabel(xlabel=x_label)
         axis.set_ylabel(ylabel=y_label)
 

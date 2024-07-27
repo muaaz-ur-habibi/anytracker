@@ -1,8 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-import smtplib
-
 from flask_login import LoginManager
 
 from os import path
@@ -18,6 +16,14 @@ def build_app():
     # secret key is same as gmail account
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "rias_gremory"
+    # for sending mails
+    app.config["MAIL_SERVER"] = 'smtp.gmail.com'
+    app.config["MAIL_PORT"] = 465
+    app.config["MAIL_USERNAME"] = 'mail.anytracker@gmail.com'
+    app.config["MAIL_PASSWORD"] = 'rias_gremory'
+    app.config["MAIL_USE_TLS"] = False
+    app.config["MAIL_USE_SSL"] = True
+
     
     # configuring the database
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DATA_DB_NAME}'
@@ -37,6 +43,8 @@ def build_app():
     def load_user(id):
         return User.query.get(int(id))
 
+
+
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(credentials, url_prefix="/handle_credentials")
 
@@ -46,9 +54,3 @@ def build_db():
     if not path.exists(f'main/{DATA_DB_NAME}'):
         db.create_all()
         print("Database created")
-
-# creating the smtp server
-def build_smtp():
-    smtp = smtplib.SMTP()
-
-    return smtp

@@ -18,9 +18,9 @@
             </center>
 
             <form method="post" action="/handle_credentials/login">
-                <label for="emailEntryLogin" class="col-sm-2 col-form-label subheadings-color">Username</label>
+                <label for="emailEntryLogin" class="col-sm-2 col-form-label subheadings-color">Email</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control-plaintext form-entry" name="nameEntryLogin" id="nameEntryLogin" placeholder="Username">
+                    <input type="text" class="form-control-plaintext form-entry" name="nameEntryLogin" id="nameEntryLogin" placeholder="example@somewhere.com">
                 </div>
 
                 <label for="passEntryLogin" class="col-sm-2 col-form-label subheadings-color">Password</label>
@@ -42,9 +42,9 @@
             </center>
 
             <form method="post" action="/handle_credentials/signup">
-                <label for="emailEntry" class="col-sm-2 col-form-label subheadings-color">Username</label>
+                <label for="emailEntry" class="col-sm-2 col-form-label subheadings-color">Email</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control-plaintext form-entry" name="nameEntry" id="nameEntry" placeholder="Username (Max 140 characters)">
+                    <input type="text" class="form-control-plaintext form-entry" name="nameEntry" id="nameEntry" placeholder="example@somewhere.com">
                 </div>
 
                 <label for="passEntry" class="col-sm-2 col-form-label subheadings-color">Password</label>
@@ -59,6 +59,7 @@
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 {% endblock %}
